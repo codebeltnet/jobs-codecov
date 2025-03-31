@@ -1,0 +1,32 @@
+name: Codecov by Sentry
+
+on:
+  workflow_call:
+    inputs:
+      repository:
+        description: The fully qualified name of the repository, including owner, e.g. codebeltnet/xunit.
+        required: true
+        type: string
+      timeout-minutes:
+        description: The maximum time in minutes to allow the job to run. Default is 15 minutes.
+        required: false
+        type: number
+        default: 15
+    secrets:
+      CODECOV_TOKEN:
+        required: true
+
+jobs:
+  codecov:
+    name: 📊 Code Coverage Analysis
+    runs-on: ubuntu-24.04
+    timeout-minutes: ${{ inputs.timeout-minutes }}
+    steps:
+      - name: Checkout
+        uses: codebeltnet/git-checkout@v1
+
+      - name: Run CodeCov Analysis
+        uses: codebeltnet/codecov-scan@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          repository: ${{ inputs.repository }}
