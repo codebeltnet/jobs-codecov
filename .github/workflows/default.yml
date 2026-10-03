@@ -7,6 +7,16 @@ on:
         description: The fully qualified name of the repository, including owner, e.g. codebeltnet/xunit.
         required: true
         type: string
+      configuration:
+        description: The path to the Codecov YAML configuration file.
+        required: false
+        type: string
+        default: .codecov/codecov.yml
+      ref:
+        description: The branch, tag or SHA to analyze. Defaults to the triggering ref.
+        required: false
+        type: string
+        default: ''
       timeout-minutes:
         description: The maximum time in minutes to allow the job to run. Default is 15 minutes.
         required: false
@@ -23,10 +33,18 @@ jobs:
     timeout-minutes: ${{ inputs.timeout-minutes }}
     steps:
       - name: Checkout
+        if: ${{ inputs.ref == '' }}
         uses: codebeltnet/git-checkout@v1
+
+      - name: Checkout requested ref
+        if: ${{ inputs.ref != '' }}
+        uses: codebeltnet/git-checkout@v1
+        with:
+          ref: ${{ inputs.ref }}
 
       - name: Run CodeCov Analysis
         uses: codebeltnet/codecov-scan@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           repository: ${{ inputs.repository }}
+          configuration: ${{ inputs.configuration }}
