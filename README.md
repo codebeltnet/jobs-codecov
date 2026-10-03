@@ -24,7 +24,7 @@ This repository contains reusable workflows for integrating Codecov by Sentry in
 To call this workflow in your GitHub repository, you can follow these steps:
 
 ```yaml
-sonarcloud-call:
+codecov:
     uses: codebeltnet/jobs-codecov/.github/workflows/default.yml@v1
 ```
 
@@ -34,6 +34,11 @@ sonarcloud-call:
 with:
   # The fully qualified name of the repository, including owner, e.g. codebeltnet/xunit.
   repository:
+  # The path to the Codecov YAML configuration file.
+  # Defaults to .codecov/codecov.yml.
+  configuration: .codecov/codecov.yml
+  # The branch, tag, or SHA to analyze. Defaults to the triggering ref.
+  ref: main
   # The maximum time in minutes to allow the job to run. Default is 15 minutes.
   timeout-minutes: 15
 ```
@@ -55,13 +60,13 @@ This workflow has no outputs.
 jobs:
   codecov:
     needs: [build,test]
-    uses: codebeltnet/jobs-codecov/.github/workflows/default@v1
+    uses: codebeltnet/jobs-codecov/.github/workflows/default.yml@v1
     with:
       repository: codebeltnet/xunit
     secrets: inherit
 ```
 
-## Contributing to Reusable Workflows for SonarQube Cloud
+## Contributing to Reusable Workflows for Codecov
 
 Contributions are welcome! 
 Feel free to submit issues, feature requests, or pull requests to help improve these workflows.
