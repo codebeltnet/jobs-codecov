@@ -39,9 +39,15 @@ with:
   configuration: .codecov/codecov.yml
   # The branch, tag, or SHA to analyze. Defaults to the triggering ref.
   ref: main
+  # Optional reporting identity, independent of checkout ref.
+  # Omit to retain Codecov's automatic branch and commit detection.
+  branch: ''
+  commit: ''
   # The maximum time in minutes to allow the job to run. Default is 15 minutes.
   timeout-minutes: 15
 ```
+
+For post-release assurance, set `ref` and `commit` to the exact released tag's commit SHA, and `branch` to `main`. `ref` controls checkout; `branch` and `commit` are forwarded through `codecov-scan` to the official action's `override_branch` and `override_commit` inputs. Existing callers can omit both new inputs to retain their current behavior.
 
 ### Secrets
 
