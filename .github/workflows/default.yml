@@ -17,6 +17,16 @@ on:
         required: false
         type: string
         default: ''
+      branch:
+        description: The reporting branch on Codecov. Omit to retain automatic detection; independent of checkout ref.
+        required: false
+        type: string
+        default: ''
+      commit:
+        description: The reporting commit SHA on Codecov. Omit to retain automatic detection.
+        required: false
+        type: string
+        default: ''
       timeout-minutes:
         description: The maximum time in minutes to allow the job to run. Default is 15 minutes.
         required: false
@@ -48,3 +58,5 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           repository: ${{ inputs.repository }}
           configuration: ${{ inputs.configuration }}
+          branch: ${{ inputs.branch }}
+          commit: ${{ inputs.commit }}
