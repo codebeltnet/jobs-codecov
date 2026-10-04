@@ -43,6 +43,8 @@ with:
   # Omit to retain Codecov's automatic branch and commit detection.
   branch: ''
   commit: ''
+  # Fail the job on upload errors. Existing callers retain the default false.
+  fail-on-error: false
   # The maximum time in minutes to allow the job to run. Default is 15 minutes.
   timeout-minutes: 15
 ```
